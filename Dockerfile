@@ -1,0 +1,30 @@
+FROM php:fpm
+MAINTAINER whitecat.chayakorn@gmail.com
+ENV PHP_INI_DIR /var/www/html
+RUN  mkdir -p $PHP_INI_DIR/public
+RUN	apt-get update
+RUN	apt-get install -y autoconf g++ make openssl libssl-dev libcurl4-openssl-dev pkg-config libsasl2-dev libpcre3-dev
+RUN	pecl install mongodb
+RUN docker-php-ext-install bcmath
+RUN echo "extension=mongodb.so" >> /usr/local/etc/php/conf.d/php.ini
+RUN apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        libpng12-dev
+
+RUN docker-php-ext-install iconv mcrypt mbstring \
+    && docker-php-ext-install zip \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install gd
+WORKDIR /home
+#install composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+	php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" &&\
+	php composer-setup.php &&\
+	php php -r "unlink('composer-setup.php');" && \
+	mv composer.phar /usr/local/bin/composer &&\
+WORKDIR /var/www/html/app
+RUN	composer require "mongodb/mongodb=^1.0.0"
+WORKDIR /var/www/html/public
+

@@ -1,0 +1,33 @@
+version: '3'
+services:
+    nginx:
+        image: nginx:latest
+        container_name: Webserv
+        ports:
+            - 443:80
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/conf.d/chayakorn.conf
+            - ./web/public:/var/www/html/public
+            - ./web/app:/var/www/html/app
+        depends_on:
+            - php
+            - mongoDB
+        restart: always
+    php:
+        build: .
+        container_name: php-fpm
+        volumes:
+            - ./web/public:/var/www/html/public
+            - ./web/app:/var/www/html/app
+    mongoDB:
+      image: mongo:latest
+      environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=792538
+      container_name: mongoDatastore
+      volumes:
+          - /lpru_mngr:/data/db
+      ports:
+        - 27017:27017
+      command: mongod
+      restart: always
