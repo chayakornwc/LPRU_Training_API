@@ -21,9 +21,6 @@ services:
             - ./web/app:/var/www/html/app
     mongoDB:
       image: mongo:latest
-      environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=792538
       container_name: mongoDatastore
       volumes:
           - /lpru_mngr:/data/db
