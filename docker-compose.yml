@@ -29,10 +29,10 @@ services:
           - ./node/training_manager:/src/training_manager
         depends_on:
           - mongoDB
-        restart: always
         command: ["npm", "start"]
         ports:
           - 3000:3000
+        restart: always
     mongoDB:
       image: mongo:latest
       container_name: mongoDatastore
