@@ -14,11 +14,25 @@ services:
             - mongoDB
         restart: always
     php:
-        build: .
-        container_name: php-fpm
-        volumes:
+      build: ./php
+      container_name: php-fpm
+      volumes:
             - ./web/public:/var/www/html/public
             - ./web/app:/var/www/html/app
+      ports:
+            - 9000:9000
+    nodejs:
+        build:
+          ./node
+        container_name: NodeJS
+        volumes:
+          - ./node/training_manager:/src/training_manager
+        depends_on:
+          - mongoDB
+        restart: always
+        command: ["npm", "start"]
+        ports:
+          - 3000:3000
     mongoDB:
       image: mongo:latest
       container_name: mongoDatastore

@@ -1,6 +1,13 @@
 <?php
  require 'vendor/autoload.php';
-  class mongoDatabase {
+
+ $manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+
+ $command = new MongoDB\Driver\Command(array("ping" => 1));
+ $result = $manager->executeCommand("test", $command);
+
+ var_dump($result, $result->toArray());
+/*  class mongoDatabase {
     function __construct(){
       $this->db = ( new mongoDB\Client)->demo->beers;
 
@@ -17,3 +24,4 @@
       return $insertable->getInsertedId();
   }
 }
+*/

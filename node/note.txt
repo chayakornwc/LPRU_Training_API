@@ -1,0 +1,4 @@
+webpack -- babel
+ #install webpack -save-dev
+ #install babel-loader --save-dev
+ #install babel-preset-es2015 --save-dev
