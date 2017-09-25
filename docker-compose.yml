@@ -14,11 +14,12 @@ services:
             - mongoDB
         restart: always
     php:
-      build: ./php
-      container_name: php-fpm
-      volumes:
+        build: .
+        container_name: php-fpm
+        volumes:
             - ./web/public:/var/www/html/public
             - ./web/app:/var/www/html/app
+<<<<<<< HEAD
       ports:
             - 9000:9000
     nodejs:
@@ -33,6 +34,8 @@ services:
         ports:
           - 3000:3000
         restart: always
+=======
+>>>>>>> parent of 03ceef5... start my app with react
     mongoDB:
       image: mongo:latest
       container_name: mongoDatastore
