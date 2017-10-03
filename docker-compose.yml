@@ -19,8 +19,7 @@ services:
         volumes:
             - ./web/public:/var/www/html/public
             - ./web/app:/var/www/html/app
-<<<<<<< HEAD
-      ports:
+        ports:
             - 9000:9000
     nodejs:
         build:
@@ -34,8 +33,6 @@ services:
         ports:
           - 3000:3000
         restart: always
-=======
->>>>>>> parent of 03ceef5... start my app with react
     mongoDB:
       image: mongo:latest
       container_name: mongoDatastore
