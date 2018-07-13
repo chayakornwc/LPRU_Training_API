@@ -184,7 +184,7 @@ exports.update = (req, res, next) =>{
             var isUpdate = false;
             if(results.length > 0){
                 if(results[0].id !== id){
-                    res.send({status:201, message:'ตรวจพบ username นี้ในระบบ'})
+                    res.send({status:201, message:'ตรวจพบ username หรือ email นี้ในระบบ'})
                 }else {
                     isUpdate = true;
                 }
